@@ -1,5 +1,13 @@
 # Shortest Route To 3 Arcade Points
 ## Being Notified
+
+```
+Summary: Here's the list of special labs on completing which you would be directly receving the skill badge,
+yes just one lab and you will get the skill badge.
+Just Open any link given below, click on 'Pre-assessment" and complete that pre-assessment lab,
+and you will get the direct skill badge without the hustle of completing 4-5 labs.
+
+```
 - Set Up an App Dev Environment on Google Cloud
 ```
 https://www.cloudskillsboost.google/course_templates/637
