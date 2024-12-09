@@ -1,7 +1,7 @@
 ## First Skill badge
 - Set Up an App Dev Environment on Google Cloud
 ```
-https://www.cloudskillsboost.google/course_templates/637
+[https://www.cloudskillsboost.google/course_templates/637](https://www.cloudskillsboost.google/course_templates/637)
 ```
 - Use Functions, Formulas, and Charts in Google Sheets
 ```
