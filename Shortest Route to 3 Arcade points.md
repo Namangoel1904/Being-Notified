@@ -1,4 +1,4 @@
-## First Skill badge
+## Being Notified
 - Set Up an App Dev Environment on Google Cloud
 ```
 https://www.cloudskillsboost.google/course_templates/637
