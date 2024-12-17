@@ -1,11 +1,11 @@
-#comnand 1
+# Command 1
 ```
 export USER_2=
 export ZONE=
 export TOPIC=
 export FUNCTION=
 ```
-#command 2
+# Command 2
 ```
 #!/bin/bash
 # Define color variables
