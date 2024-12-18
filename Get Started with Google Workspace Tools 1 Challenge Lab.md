@@ -4,9 +4,9 @@
 
 2. In the `General` tab, scroll down to the `Signature` section and click `Create New`.
 
-3. Give this signature `quickgcplab` name, then click `Create`.
+3. Give this signature `BeingNotified` name, then click `Create`.
 
-4. In the Signature defaults section, use the dropdown menu under `For New Emails Use` and select `quickgcplab`.
+4. In the Signature defaults section, use the dropdown menu under `For New Emails Use` and select `BeingNotified`.
 
 * Paste the following
 
@@ -92,7 +92,7 @@ Comments
 
 2. Select `App` > `Blank app`.
 
-3. For `App name`, type `quickgcplab` to name your app.
+3. For `App name`, type `BeingNotified` to name your app.
 
 4. For `Category`, select `Education & Training` from the list.
 
