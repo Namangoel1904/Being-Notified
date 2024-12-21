@@ -87,7 +87,7 @@ FILES=(
     "windows_startup.ps1"
 )
 
-BASE_URL="https://github.com/Namangoel1904/Being-Notified/tree/main/Configuring%20and%20Using%20Cloud%20Logging%20and%20Cloud%20Monitoringsol"
+BASE_URL="https://github.com/QUICK-GCP-LAB/2-Minutes-Labs-Solutions/raw/refs/heads/main/Configuring%20and%20Using%20Cloud%20Logging%20and%20Cloud%20Monitoring/stackdriver-lab"
 
 for file in "${FILES[@]}"; do
     curl -LO "${BASE_URL}/${file}"
@@ -145,8 +145,8 @@ echo
 # Function to display a random congratulatory message
 function random_congrats() {
     MESSAGES=(
-        "${GREEN}Congratulations For Completing The Lab! ${RESET}"
-            )
+        "${GREEN}Done${RESET}" 
+    )
 
     RANDOM_INDEX=$((RANDOM % ${#MESSAGES[@]}))
     echo -e "${BOLD}${MESSAGES[$RANDOM_INDEX]}"
