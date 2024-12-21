@@ -1,0 +1,178 @@
+clear
+
+#!/bin/bash
+# Define color variables
+
+BLACK=`tput setaf 0`
+RED=`tput setaf 1`
+GREEN=`tput setaf 2`
+YELLOW=`tput setaf 3`
+BLUE=`tput setaf 4`
+MAGENTA=`tput setaf 5`
+CYAN=`tput setaf 6`
+WHITE=`tput setaf 7`
+
+BG_BLACK=`tput setab 0`
+BG_RED=`tput setab 1`
+BG_GREEN=`tput setab 2`
+BG_YELLOW=`tput setab 3`
+BG_BLUE=`tput setab 4`
+BG_MAGENTA=`tput setab 5`
+BG_CYAN=`tput setab 6`
+BG_WHITE=`tput setab 7`
+
+BOLD=`tput bold`
+RESET=`tput sgr0`
+
+# Array of color codes excluding black and white
+TEXT_COLORS=($RED $GREEN $YELLOW $BLUE $MAGENTA $CYAN)
+BG_COLORS=($BG_RED $BG_GREEN $BG_YELLOW $BG_BLUE $BG_MAGENTA $BG_CYAN)
+
+# Pick random colors
+RANDOM_TEXT_COLOR=${TEXT_COLORS[$RANDOM % ${#TEXT_COLORS[@]}]}
+RANDOM_BG_COLOR=${BG_COLORS[$RANDOM % ${#BG_COLORS[@]}]}
+
+#----------------------------------------------------start--------------------------------------------------#
+
+echo "${RANDOM_BG_COLOR}${RANDOM_TEXT_COLOR}${BOLD}Starting Execution${RESET}"
+
+export ZONE=$(gcloud compute project-info describe \
+--format="value(commonInstanceMetadata.items[google-compute-default-zone])")
+
+# Step 1: Getting Project IDs from User
+echo "${BOLD}${CYAN}Getting Project IDs from User${RESET}"
+get_project_ids() {
+  echo "Please type the project IDs as prompted."
+
+  read -p "Please enter PROJECT_ID_1: " PROJECT_ID_1
+  read -p "Please enter PROJECT_ID_2: " PROJECT_ID_2
+  read -p "Please enter PROJECT_ID_3: " PROJECT_ID_3
+}
+
+# Call the function
+get_project_ids
+
+# Step 2: Provide Links to Create VM Instances
+echo "${BOLD}${MAGENTA}Provide Links to Create VM Instances${RESET}"
+echo
+echo "${BOLD}${YELLOW}"Use the following link to create worker-1-server in $ZONE"${RESET}"
+echo
+echo "https://console.cloud.google.com/compute/instancesAdd?project=$PROJECT_ID_2"
+echo
+echo "${BOLD}${YELLOW}"Use the following link to create worker-2-server in $ZONE"${RESET}"
+echo
+echo "https://console.cloud.google.com/compute/instancesAdd?project=$PROJECT_ID_3"
+echo
+
+# Step 3: Check Progress for VM Instances Creation
+echo "${BOLD}${GREEN}Check Progress for VM Instances Creation${RESET}"
+# Function to prompt user to check their progress
+function check_progress {
+    while true; do
+        echo
+        echo -n "${BOLD}${YELLOW}Have you Created VM instances? (Y/N): ${RESET}"
+        read -r user_input
+        if [[ "$user_input" == "Y" || "$user_input" == "y" ]]; then
+            echo
+            echo "${BOLD}${CYAN}Great! Proceeding to the next steps...${RESET}"
+            echo
+            break
+        elif [[ "$user_input" == "N" || "$user_input" == "n" ]]; then
+            echo
+            echo "${BOLD}${RED}Please Create VM instances and then press Y to continue.${RESET}"
+        else
+            echo
+            echo "${BOLD}${MAGENTA}Invalid input. Please enter Y or N.${RESET}"
+        fi
+    done
+}
+
+# Call function to check progress before proceeding
+check_progress
+
+# Step 4: SSH into worker-1-server and Install NGINX
+echo "${BOLD}${RED}SSH into worker-1-server and Install NGINX${RESET}"
+gcloud config set project $PROJECT_ID_2
+
+gcloud compute ssh --zone "$ZONE" "worker-1-server" --project "$PROJECT_ID_2" --quiet --command "sudo apt-get update && sudo apt-get install -y nginx && ps auwx | grep nginx "
+sleep 15
+
+# Step 5: SSH into worker-2-server and Install NGINX
+echo "${BOLD}${GREEN}SSH into worker-2-server and Install NGINX${RESET}"
+gcloud config set project $PROJECT_ID_3
+
+gcloud compute ssh --zone "$ZONE" "worker-2-server" --project "$PROJECT_ID_3" --quiet --command "sudo apt-get update && sudo apt-get install -y nginx && ps auwx | grep nginx "
+
+# Step 6: Update Labels for worker-1-server
+echo "${BOLD}${CYAN}Update Labels for worker-1-server${RESET}"
+gcloud config set project $PROJECT_ID_2
+
+gcloud compute instances update worker-1-server \
+    --update-labels=component=frontend,stage=dev \
+    --zone=$ZONE
+
+# Step 7: Update Labels for worker-2-server
+echo "${BOLD}${MAGENTA}Update Labels for worker-2-server${RESET}"
+gcloud config set project $PROJECT_ID_3
+
+gcloud compute instances update worker-2-server \
+    --update-labels=component=frontend,stage=test \
+    --zone=$ZONE
+
+gcloud config set project $PROJECT_ID_1
+
+# Step 8: Create an Email Notification Channel
+echo "${BOLD}${YELLOW}Create an Email Notification Channel${RESET}"
+cat > email-channel.json <<EOF_END
+{
+  "type": "email",
+  "displayName": "quickgcplab",
+  "description": "Awesome",
+  "labels": {
+    "email_address": "$USER_EMAIL"
+  }
+}
+EOF_END
+
+gcloud beta monitoring channels create --channel-content-from-file="email-channel.json"
+
+# Step 9: Follow Video Instructions to Complete Remaining Tasks
+echo
+echo "${BOLD}${BLUE}Follow Video Instructions to Complete Remaining Tasks${RESET}"
+echo
+echo "https://console.cloud.google.com/monitoring/settings/add-projects?project=$PROJECT_ID_1"
+echo
+
+# Function to display a random congratulatory message
+function random_congrats() {
+    MESSAGES=(
+        "${GREEN}Done!${RESET}"
+    )
+
+    RANDOM_INDEX=$((RANDOM % ${#MESSAGES[@]}))
+    echo -e "${BOLD}${MESSAGES[$RANDOM_INDEX]}"
+}
+
+# Display a random congratulatory message
+random_congrats
+
+echo -e "\n"  # Adding one blank line
+
+cd
+
+remove_files() {
+    # Loop through all files in the current directory
+    for file in *; do
+        # Check if the file name starts with "gsp", "arc", or "shell"
+        if [[ "$file" == gsp* || "$file" == arc* || "$file" == shell* ]]; then
+            # Check if it's a regular file (not a directory)
+            if [[ -f "$file" ]]; then
+                # Remove the file and echo the file name
+                rm "$file"
+                echo "File removed: $file"
+            fi
+        fi
+    done
+}
+
+remove_files
