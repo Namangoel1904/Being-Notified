@@ -87,7 +87,7 @@ FILES=(
     "windows_startup.ps1"
 )
 
-BASE_URL="https://github.com/QUICK-GCP-LAB/2-Minutes-Labs-Solutions/raw/refs/heads/main/Configuring%20and%20Using%20Cloud%20Logging%20and%20Cloud%20Monitoring/stackdriver-lab"
+BASE_URL="https://github.com/Namangoel1904/Being-Notified/tree/main/Configuring%20and%20Using%20Cloud%20Logging%20and%20Cloud%20Monitoringsol"
 
 for file in "${FILES[@]}"; do
     curl -LO "${BASE_URL}/${file}"
