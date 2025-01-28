@@ -1,3 +1,4 @@
+```
 BLACK=`tput setaf 0`
 RED=`tput setaf 1`
 GREEN=`tput setaf 2`
@@ -274,3 +275,12 @@ ORDER BY
 echo "${RED}${BOLD}Congratulations${RESET}" "${WHITE}${BOLD}for${RESET}" "${GREEN}${BOLD}Completing the Lab !!!${RESET}"
 
 #-----------------------------------------------------end----------------------------------------------------------#
+```
+
+```
+curl -LO raw.githubusercontent.com/QUICK-GCP-LAB/2-Minutes-Labs-Solutions/main/BigQuery%20Machine%20Learning%20using%20Soccer%20Data/gsp851.sh
+
+sudo chmod +x gsp851.sh
+
+./gsp851.sh
+```
