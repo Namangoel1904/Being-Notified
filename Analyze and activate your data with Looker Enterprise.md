@@ -1,4 +1,3 @@
----
 ### **Open fintech.model file**
 ```
 explore: +loan_details {
@@ -126,5 +125,9 @@ explore: +loan_details {
 
 3. **Save Changes:**
    - Click `Save` to apply updates.
+
+---
+
+## 🎉 **Congratulations! Lab Completed Successfully!** 🏆  
 
 ---
