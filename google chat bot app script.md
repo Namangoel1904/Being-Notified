@@ -53,8 +53,8 @@ function onRemoveFromSpace(event) {
 ```
 
 
-- Go to OAuth consent screen from (here)[https://console.cloud.google.com/apis/credentials/consent?]
-- Go to Google Chat API Configuration Page from (here)[https://console.cloud.google.com/apis/api/chat.googleapis.com/hangouts-chat?]
+- Go to OAuth consent screen from [here](https://console.cloud.google.com/apis/credentials/consent?)
+- Go to Google Chat API Configuration Page from [here](https://console.cloud.google.com/apis/api/chat.googleapis.com/hangouts-chat?)
 
 * In the **Configuration** dialog, set the fields with the following values:
 
